@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Dimensión con la información única de los clientes."
+    columns:
+      - name: customer_id
+        description: "Clave primaria de la tabla de clientes."
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_orders
+    description: "Tabla de hechos con el resumen financiero de cada pedido."
+    columns:
+      - name: order_id
+        description: "Clave primaria del pedido."
+        tests:
+          - unique
+          - not_null
+      - name: total_order_value
+        description: "Valor total del pedido (ítems + envío)."
+        tests:
+          - not_null
+
+  - name: fct_payments
+    description: "Tabla de hechos con el detalle de los pagos."
+    columns:
+      - name: payment_id
+        description: "Clave primaria del pago."
+        tests:
+          - unique
+          - not_null

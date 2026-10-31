@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: olist
+    # Acá va el nombre del esquema (database/schema) donde subiste los CSV en Databricks
+    database: workspace
+    schema: olist_raw 
+    tables:
+      - name: olist_orders_dataset
+      - name: olist_order_items_dataset
+      - name: olist_customers_dataset
+      - name: olist_products_dataset
+      - name: olist_order_payments_dataset
