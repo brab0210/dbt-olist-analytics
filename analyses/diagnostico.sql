@@ -1,3 +1,5 @@
+{{ config(enabled=false) }}
+
 -- Si esto devuelve filas, significa que hay order_id repetidos en la fuente
 SELECT order_id, COUNT(*) as cantidad
 FROM {{ ref('stg_orders') }}
