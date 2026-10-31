@@ -33,6 +33,4 @@ El proyecto incluye **tests automáticos de dbt** para garantizar la integridad 
 
 ##  Linaje de Datos (DAG)
 
-##  Linaje de Datos (DAG)
-
 ![Linaje de Datos](lineage_graph.png)
