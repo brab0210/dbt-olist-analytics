@@ -85,10 +85,11 @@ except Exception as e:
     st.stop()
 
 # --- KPIs Principales ---
- col1, col2, col3 = st.columns(3)
+ 
 """ col1.metric("Ingresos Totales", f"${df_kpis['ingresos_totales'][0]:,.2f}")
 col2.metric("Pedidos Entregados", f"{df_kpis['total_pedidos'][0]:,}")
 col3.metric("Ticket Promedio", f"${df_kpis['ticket_promedio'][0]:,.2f}") """
+col1, col2, col3 = st.columns(3)
 
 with col1:
     st.info(f"**Ingresos Totales**\n\n### ${df_kpis['ingresos_totales'][0]:,.2f}")
