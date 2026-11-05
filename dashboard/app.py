@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.express as px
 from databricks import sql
 
-st.set_page_config(page_title="Olist Analytics", page_icon="🛍️", layout="wide")
+st.set_page_config(page_title="Olist Analytics", page_icon="", layout="wide")
 
-st.title("🛍️ Olist E-Commerce Dashboard")
+st.title(" Olist E-Commerce Dashboard")
 st.markdown("Análisis de ventas y logística basado en el modelo dimensional de dbt.")
 
 # --- Configuración de la conexión ---
@@ -86,9 +86,9 @@ except Exception as e:
 
 # --- KPIs Principales ---
  
-""" col1.metric("Ingresos Totales", f"${df_kpis['ingresos_totales'][0]:,.2f}")
-col2.metric("Pedidos Entregados", f"{df_kpis['total_pedidos'][0]:,}")
-col3.metric("Ticket Promedio", f"${df_kpis['ticket_promedio'][0]:,.2f}") """
+#col1.metric("Ingresos Totales", f"${df_kpis['ingresos_totales'][0]:,.2f}")
+#col2.metric("Pedidos Entregados", f"{df_kpis['total_pedidos'][0]:,}")
+#col3.metric("Ticket Promedio", f"${df_kpis['ticket_promedio'][0]:,.2f}")
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -104,13 +104,13 @@ st.divider()
 col_izq, col_der = st.columns(2)
 
 with col_izq:
-    st.subheader("📈 Evolución de Ingresos")
+    st.subheader(" Evolución de Ingresos")
     fig_ventas = px.line(df_ventas, x="mes", y="ingresos", markers=True,
                          labels={"mes": "Fecha", "ingresos": "Ingresos (BRL)"})
     st.plotly_chart(fig_ventas, use_container_width=True)
 
 with col_der:
-    st.subheader("🏆 Top 10 Categorías")
+    st.subheader(" Top 10 Categorías")
     fig_categorias = px.bar(df_categorias, x="ingresos", y="categoria", orientation='h',
                             labels={"ingresos": "Ingresos (BRL)", "categoria": "Categoría"},
                             color="ingresos", color_continuous_scale="Blues")
