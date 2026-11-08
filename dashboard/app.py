@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.express as px
 from databricks import sql
 
-st.set_page_config(page_title="Olist Analytics", page_icon="🛍️", layout="wide")
+st.set_page_config(page_title="Olist Analytics", page_icon="", layout="wide")
 
-st.title("🛍️ Olist E-Commerce Dashboard")
+st.title(" Olist E-Commerce Dashboard")
 st.markdown("Análisis de ventas y logística basado en el modelo dimensional de dbt.")
 
 # --- Configuración de la conexión ---
@@ -114,7 +114,16 @@ except Exception as e:
     st.stop()
 
 # --- KPIs Principales ---
+<<<<<<< HEAD
 col1, col2, col3, col4 = st.columns(4)
+=======
+ 
+#col1.metric("Ingresos Totales", f"${df_kpis['ingresos_totales'][0]:,.2f}")
+#col2.metric("Pedidos Entregados", f"{df_kpis['total_pedidos'][0]:,}")
+#col3.metric("Ticket Promedio", f"${df_kpis['ticket_promedio'][0]:,.2f}")
+col1, col2, col3 = st.columns(3)
+
+>>>>>>> d3acaf55e5308d6195ce6a9922297663fa0594f1
 with col1:
     st.info(f"**Ingresos Totales**\n\n### ${df_kpis['ingresos_totales'][0]:,.2f}")
 with col2:
@@ -132,18 +141,19 @@ st.divider()
 col_izq, col_der = st.columns(2)
 
 with col_izq:
-    st.subheader("📈 Evolución de Ingresos")
+    st.subheader(" Evolución de Ingresos")
     fig_ventas = px.line(df_ventas, x="mes", y="ingresos", markers=True,
                          labels={"mes": "Fecha", "ingresos": "Ingresos (BRL)"})
     st.plotly_chart(fig_ventas, use_container_width=True)
 
 with col_der:
-    st.subheader("🏆 Top 10 Categorías")
+    st.subheader(" Top 10 Categorías")
     fig_categorias = px.bar(df_categorias, x="ingresos", y="categoria", orientation='h',
                             labels={"ingresos": "Ingresos (BRL)", "categoria": "Categoría"},
                             color="ingresos", color_continuous_scale="Blues")
     fig_categorias.update_layout(yaxis={'categoryorder':'total ascending'})
     st.plotly_chart(fig_categorias, use_container_width=True)
+<<<<<<< HEAD
 
 # --- Fila 2: Pagos y Estados ---
 st.divider()
@@ -163,3 +173,5 @@ with col_estados:
                          labels={"estado": "Estado", "ingresos": "Ingresos (BRL)"},
                          color="ingresos", color_continuous_scale="Teal")
     st.plotly_chart(fig_estados, use_container_width=True)
+=======
+>>>>>>> d3acaf55e5308d6195ce6a9922297663fa0594f1
