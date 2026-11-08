@@ -116,14 +116,7 @@ except Exception as e:
 # --- KPIs Principales ---
 <<<<<<< HEAD
 col1, col2, col3, col4 = st.columns(4)
-=======
- 
-#col1.metric("Ingresos Totales", f"${df_kpis['ingresos_totales'][0]:,.2f}")
-#col2.metric("Pedidos Entregados", f"{df_kpis['total_pedidos'][0]:,}")
-#col3.metric("Ticket Promedio", f"${df_kpis['ticket_promedio'][0]:,.2f}")
-col1, col2, col3 = st.columns(3)
 
->>>>>>> d3acaf55e5308d6195ce6a9922297663fa0594f1
 with col1:
     st.info(f"**Ingresos Totales**\n\n### ${df_kpis['ingresos_totales'][0]:,.2f}")
 with col2:
@@ -160,7 +153,7 @@ st.divider()
 col_pagos, col_estados = st.columns(2)
 
 with col_pagos:
-    st.subheader("💳 Medios de Pago")
+    st.subheader(" Medios de Pago")
     fig_pagos = px.pie(df_pagos, values="cantidad", names="medio_pago", 
                        title="Distribución de métodos de pago",
                        hole=0.4) # Gráfico de dona
