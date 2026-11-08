@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.express as px
 from databricks import sql
 
-st.set_page_config(page_title="Olist Analytics", page_icon="", layout="wide")
+st.set_page_config(page_title="Olist Analytics", page_icon="🛍️", layout="wide")
 
-st.title(" Olist E-Commerce Dashboard")
+st.title("🛍️ Olist E-Commerce Dashboard")
 st.markdown("Análisis de ventas y logística basado en el modelo dimensional de dbt.")
 
 # --- Configuración de la conexión ---
@@ -114,9 +114,7 @@ except Exception as e:
     st.stop()
 
 # --- KPIs Principales ---
-<<<<<<< HEAD
 col1, col2, col3, col4 = st.columns(4)
-
 with col1:
     st.info(f"**Ingresos Totales**\n\n### ${df_kpis['ingresos_totales'][0]:,.2f}")
 with col2:
@@ -146,7 +144,6 @@ with col_der:
                             color="ingresos", color_continuous_scale="Blues")
     fig_categorias.update_layout(yaxis={'categoryorder':'total ascending'})
     st.plotly_chart(fig_categorias, use_container_width=True)
-<<<<<<< HEAD
 
 # --- Fila 2: Pagos y Estados ---
 st.divider()
@@ -160,11 +157,9 @@ with col_pagos:
     st.plotly_chart(fig_pagos, use_container_width=True)
 
 with col_estados:
-    st.subheader("🗺️ Ventas por Estado")
+    st.subheader(" Ventas por Estado")
     # Mostramos el Top 10 de estados para no amontonar el gráfico
     fig_estados = px.bar(df_estados.head(10), x="estado", y="ingresos",
                          labels={"estado": "Estado", "ingresos": "Ingresos (BRL)"},
                          color="ingresos", color_continuous_scale="Teal")
     st.plotly_chart(fig_estados, use_container_width=True)
-=======
->>>>>>> d3acaf55e5308d6195ce6a9922297663fa0594f1
