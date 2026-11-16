@@ -2,10 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from databricks import sql
+import requests # <-- IMPORTANTE: Agregamos requests
 
-st.set_page_config(page_title="Olist Analytics", page_icon="🛍️", layout="wide")
+st.set_page_config(page_title="Olist Analytics", page_icon="", layout="wide")
 
-st.title("🛍️ Olist E-Commerce Dashboard")
+st.title(" Olist E-Commerce Dashboard")
 st.markdown("Análisis de ventas y logística basado en el modelo dimensional de dbt.")
 
 # --- Configuración de la conexión ---
@@ -38,13 +39,32 @@ def load_data(query):
             columns = [desc[0] for desc in cursor.description]
             return pd.DataFrame(result, columns=columns)
 
+# --- NUEVA FUNCIÓN PARA ENCENDER EL WAREHOUSE ---
+def encender_warehouse():
+    """Envía una señal a Databricks para iniciar el SQL Warehouse si está detenido."""
+    host = st.secrets["DATABRICKS_HOST"]
+    token = st.secrets["DATABRICKS_TOKEN"]
+    warehouse_id = st.secrets["DATABRICKS_WAREHOUSE_ID"]
+    
+    url = f"https://{host}/api/2.0/sql/warehouses/{warehouse_id}/start"
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    try:
+        response = requests.post(url, headers=headers, timeout=30)
+        if response.status_code == 200:
+            st.toast(" Señal de encendido enviada a Databricks. El warehouse está arrancando...")
+        else:
+            st.warning(f" No se pudo enviar la señal de encendido (Código: {response.status_code})")
+    except Exception as e:
+        st.error(f" Error al intentar encender el warehouse: {e}")
+
 # --- ATENCIÓN ACÁ: Tu catálogo y esquema ---
 CATALOG = "workspace"
 SCHEMA = "olist_raw" # Modificá esto si tus tablas de dbt están en otro esquema
 
 # --- Consultas SQL a las tablas de dbt ---
 
-# 1. KPIs principales (Agregamos el promedio de días de entrega)
+# 1. KPIs principales
 query_kpis = f"""
     SELECT 
         SUM(total_order_value) as ingresos_totales,
@@ -78,7 +98,7 @@ query_categorias = f"""
     LIMIT 10
 """
 
-# 4. Medios de pago (NUEVO)
+# 4. Medios de pago
 query_pagos = f"""
     SELECT 
         payment_type as medio_pago,
@@ -89,7 +109,7 @@ query_pagos = f"""
     ORDER BY 2 DESC
 """
 
-# 5. Ventas por estado (NUEVO)
+# 5. Ventas por estado
 query_estados = f"""
     SELECT 
         c.state as estado,
@@ -101,9 +121,12 @@ query_estados = f"""
     ORDER BY 2 DESC
 """
 
+# --- 1. ENCENDEMOS EL WAREHOUSE ANTES DE CARGAR DATOS ---
+encender_warehouse()
+
 # --- Carga de datos ---
 try:
-    with st.spinner("Cargando datos desde Databricks..."):
+    with st.spinner("Cargando datos desde Databricks (puede tardar si el warehouse estaba dormido)..."):
         df_kpis = load_data(query_kpis)
         df_ventas = load_data(query_ventas_mes)
         df_categorias = load_data(query_categorias)
